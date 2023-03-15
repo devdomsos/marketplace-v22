@@ -82,17 +82,17 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
             css={{ mx: 'auto', maxWidth: 728, pt: '$5', textAlign: 'center' }}
           >
             <Text style="h3" css={{ mb: 24 }}>
-              OpenPulse Marketplace
+              0xygen Marketplace
             </Text>
             <Text style="body1" css={{ mb: 48 }}>
-              Buy and sell NFTs on OpenPulse as well as list them on other marketplaces like OpenSea or Rarible.
+              Buy and sell NFTs on 0xygen as well as list them on other marketplaces like OpenSea or Rarible.
             </Text>
-            <a
-              href="https://github.com/reservoirprotocol/marketplace-v2"
-              target="_blank"
-            >
-              <Button color="gray3">View Source Code</Button>
-            </a>
+            {/*<a*/}
+            {/*  href="https://github.com/reservoirprotocol/marketplace-v2"*/}
+            {/*  target="_blank"*/}
+            {/*>*/}
+            {/*  <Button color="gray3">View Source Code</Button>*/}
+            {/*</a>*/}
           </Flex>
         )}
         <Flex css={{ my: '$6', gap: 65 }} direction="column">
