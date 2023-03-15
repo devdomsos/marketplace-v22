@@ -28,10 +28,29 @@ import supportedChains from 'utils/chains'
 import { useMarketplaceChain } from 'hooks'
 import ChainContextProvider from 'context/ChainContextProvider'
 
+import localFont from '@next/font/local';
+
+const basicLocalFont = localFont({ src: '../assets/fonts/jura.ttf', variable: '--basic-font' });
+
+const headlineLocalFont = localFont({
+  src: '../assets/fonts/orbitron.ttf',
+  variable: '--headline-font',
+});
+
+
 //CONFIGURABLE: Use nextjs to load your own custom font: https://nextjs.org/docs/basic-features/font-optimization
 const inter = Inter({
   subsets: ['latin'],
 })
+
+
+export const FEE_BPS = process.env.NEXT_PUBLIC_FEE_BPS
+
+const DISABLE_POWERED_BY_RESERVOIR = true
+
+export const FEE_RECIPIENT = process.env.NEXT_PUBLIC_FEE_RECIPIENT
+    ? process.env.NEXT_PUBLIC_FEE_RECIPIENT
+    : undefined
 
 export const NORMALIZE_ROYALTIES = process.env.NEXT_PUBLIC_NORMALIZE_ROYALTIES
   ? process.env.NEXT_PUBLIC_NORMALIZE_ROYALTIES === 'true'
@@ -51,7 +70,7 @@ const { chains, provider } = configureChains(supportedChains, [
 ])
 
 const { connectors } = getDefaultClient({
-  appName: 'Reservoir Marketplace',
+  appName: 'Pulse Marketplace',
   chains,
 })
 
@@ -63,8 +82,8 @@ const wagmiClient = createClient({
 
 //CONFIGURABLE: Here you can override any of the theme tokens provided by RK: https://docs.reservoir.tools/docs/reservoir-kit-theming-and-customization
 const reservoirKitThemeOverrides = {
-  headlineFont: inter.style.fontFamily,
-  font: inter.style.fontFamily,
+  headlineFont: headlineLocalFont.style.fontFamily,
+  font: basicLocalFont.style.fontFamily,
   primaryColor: '#6E56CB',
   primaryHoverColor: '#644fc1',
 }
@@ -145,6 +164,9 @@ function MyApp({
             }),
             source: source,
             normalizeRoyalties: NORMALIZE_ROYALTIES,
+            marketplaceFee: FEE_BPS ? parseInt(FEE_BPS) : undefined,
+            marketplaceFeeRecipient: FEE_RECIPIENT,
+            disablePoweredByReservoir: DISABLE_POWERED_BY_RESERVOIR,
           }}
           theme={reservoirKitTheme}
         >

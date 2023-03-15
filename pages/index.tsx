@@ -82,11 +82,10 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
             css={{ mx: 'auto', maxWidth: 728, pt: '$5', textAlign: 'center' }}
           >
             <Text style="h3" css={{ mb: 24 }}>
-              Open Source Marketplace
+              OpenPulse Marketplace
             </Text>
             <Text style="body1" css={{ mb: 48 }}>
-              Reservoir Marketplace is an open-source project that showcases the
-              latest and greatest features of the Reservoir Platform.
+              Buy and sell NFTs on OpenPulse as well as list them on other marketplaces like OpenSea or Rarible.
             </Text>
             <a
               href="https://github.com/reservoirprotocol/marketplace-v2"

@@ -78,29 +78,29 @@ export const Footer = () => {
       }}
     >
       <Flex css={{ gap: 80, '@bp600': { gap: 136 } }}>
-        <Flex direction="column">
-          <SectionTitle title="Developers" />
-          {developerSectionLinks.map((props) => (
-            <SectionLink key={props.name} {...props} />
-          ))}
-        </Flex>
-        <Flex direction="column">
-          <SectionTitle title="Company" />
-          {companySectionLinks.map((props) => (
-            <SectionLink key={props.name} {...props} />
-          ))}
-        </Flex>
+        {/*<Flex direction="column">*/}
+        {/*  <SectionTitle title="Developers" />*/}
+        {/*  {developerSectionLinks.map((props) => (*/}
+        {/*    <SectionLink key={props.name} {...props} />*/}
+        {/*  ))}*/}
+        {/*</Flex>*/}
+        {/*<Flex direction="column">*/}
+        {/*  <SectionTitle title="Company" />*/}
+        {/*  {companySectionLinks.map((props) => (*/}
+        {/*    <SectionLink key={props.name} {...props} />*/}
+        {/*  ))}*/}
+        {/*</Flex>*/}
       </Flex>
       <Flex
         direction="column"
         css={{ alignItems: 'flex-start', '@bp600': { alignItems: 'flex-end' } }}
       >
-        <SectionTitle title="Join Reservoir Community" />
+        {/*<SectionTitle title="Join The Community" />*/}
         <Flex css={{ gap: '$4', mt: 16 }}>
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://twitter.com/reservoir0x"
+            href="https://twitter.com/0xygenMarket"
           >
             <Button size="xs" color="gray3">
               <FontAwesomeIcon icon={faTwitter} width={14} height={14} />

@@ -28,29 +28,29 @@ class MyDocument extends Document {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         {/* Meta tags */}
-        <meta name="keywords" content="nft, ethereum, protocol" />
-        <meta name="keywords" content="NFT, API, Protocol" />
+        <meta name="keywords" content="nft, ethereum, polygon, marketplace, openSea, 0xygen" />
+        <meta name="keywords" content="Nft, Ethereum, Polygon, Marketplace, OpenSea, 0xygen" />
 
         {/* Favicon */}
         <link
           rel="shortcut icon"
           type="image/svg"
-          href="https://marketplace.reservoir.tools/reservoir.svg"
+          href="/favicon.png"
         />
 
         {/* Reservoir meta tags */}
-        <meta property="reservoir:title" content="Reservoir Market" />
-        <meta property="reservoir:icon" content="/reservoir-source-icon.png" />
+        <meta property="oxygen:title" content="0xygen Market" />
+        <meta property="oxygen:icon" content="/favicon.png" />
         <meta
-          property="reservoir:token-url-mainnet"
+          property="oxygen:token-url-mainnet"
           content="/collection/ethereum/${contract}/${tokenId}"
         />
         <meta
-          property="reservoir:token-url-goerli"
+          property="oxygen:token-url-goerli"
           content="/collection/goerli/${contract}/${tokenId}"
         />
         <meta
-          property="reservoir:token-url-polygon"
+          property="oxygen:token-url-polygon"
           content="/collection/polygon/${contract}/${tokenId}"
         />
         <body>
