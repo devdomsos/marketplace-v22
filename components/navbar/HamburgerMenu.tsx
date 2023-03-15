@@ -23,6 +23,7 @@ import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { FullscreenModal } from 'components/common/FullscreenModal'
 import { useENSResolver } from 'hooks'
 import ThemeSwitcher from 'components/navbar/ThemeSwitcher'
+import Logo from "../common/Logo";
 
 const HamburgerMenu = () => {
   const { address, isConnected } = useAccount()
@@ -67,12 +68,13 @@ const HamburgerMenu = () => {
         >
           <Link href="/">
             <Box css={{ width: 34, cursor: 'pointer' }}>
-              <Image
-                src="/reservoirLogo.svg"
-                width={34}
-                height={39}
-                alt="Reservoir"
-              />
+              {/*<Image*/}
+              {/*  src="/reservoirLogo.svg"*/}
+              {/*  width={34}*/}
+              {/*  height={39}*/}
+              {/*  alt="Reservoir"*/}
+              {/*/>*/}
+                <Logo />
             </Box>
           </Link>
           <RadixDialog.Close>
@@ -242,19 +244,19 @@ const HamburgerMenu = () => {
                   Portfolio
                 </Text>
               </Link>
-              <Anchor
-                href="https://docs.reservoir.tools/docs"
-                target="_blank"
-                css={{
-                  borderBottom: '1px solid $gray4',
-                  cursor: 'pointer',
-                  pb: '$4',
-                  pt: '24px',
-                  width: '100%',
-                }}
-              >
-                <Text style="subtitle1">Docs</Text>
-              </Anchor>
+              {/*<Anchor*/}
+              {/*  href="https://docs.reservoir.tools/docs"*/}
+              {/*  target="_blank"*/}
+              {/*  css={{*/}
+              {/*    borderBottom: '1px solid $gray4',*/}
+              {/*    cursor: 'pointer',*/}
+              {/*    pb: '$4',*/}
+              {/*    pt: '24px',*/}
+              {/*    width: '100%',*/}
+              {/*  }}*/}
+              {/*>*/}
+              {/*  <Text style="subtitle1">Docs</Text>*/}
+              {/*</Anchor>*/}
             </Flex>
             <Box>
               <ConnectWalletButton />
@@ -281,7 +283,7 @@ const HamburgerMenu = () => {
               <FontAwesomeIcon icon={faTwitter} width={20} height={20} />
             </Button>
           </a>
-          <ThemeSwitcher />
+          {/*<ThemeSwitcher />*/}
         </Flex>
       </Flex>
     </FullscreenModal>

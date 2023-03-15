@@ -16,6 +16,7 @@ import { useMounted } from '../../hooks'
 import { useAccount } from 'wagmi'
 import { ProfileDropdown } from './ProfileDropdown'
 import CartButton from './CartButton'
+import Logo from "../common/Logo";
 
 export const NAVBAR_HEIGHT = 81
 export const NAVBAR_HEIGHT_MOBILE = 77
@@ -60,12 +61,7 @@ const Navbar = () => {
         <Flex align="center">
           <Link href="/">
             <Box css={{ width: 34, cursor: 'pointer' }}>
-              <Image
-                src="/reservoirLogo.svg"
-                width={34}
-                height={39}
-                alt="Reservoir"
-              />
+              <Logo />
             </Box>
           </Link>
         </Flex>
@@ -99,21 +95,22 @@ const Navbar = () => {
         <Flex align="center">
           <Link href="/">
             <Box css={{ width: 112, cursor: 'pointer' }}>
-              {theme == 'dark' ? (
-                <Image
-                  src="/reservoirMarketLogo.svg"
-                  width={112}
-                  height={36}
-                  alt="Reservoir"
-                />
-              ) : (
-                <Image
-                  src="/reservoirMarketLogoLight.svg"
-                  width={112}
-                  height={36}
-                  alt="Reservoir"
-                />
-              )}
+              {/*{theme == 'dark' ? (*/}
+              {/*  <Image*/}
+              {/*    src="/reservoirMarketLogo.svg"*/}
+              {/*    width={112}*/}
+              {/*    height={36}*/}
+              {/*    alt="Reservoir"*/}
+              {/*  />*/}
+              {/*) : (*/}
+              {/*  <Image*/}
+              {/*    src="/reservoirMarketLogoLight.svg"*/}
+              {/*    width={112}*/}
+              {/*    height={36}*/}
+              {/*    alt="Reservoir"*/}
+              {/*  />*/}
+              {/*)}*/}
+                <Logo />
             </Box>
           </Link>
           <Box css={{ flex: 1, px: '$5', maxWidth: 460 }}>
@@ -133,15 +130,15 @@ const Navbar = () => {
             <Link href="/portfolio">
               <NavItem active={router.pathname == '/portfolio'}>Sell</NavItem>
             </Link>
-            <Link href="https://docs.reservoir.tools/docs">
-              <NavItem active={false}>Docs</NavItem>
-            </Link>
+            {/*<Link href="https://docs.reservoir.tools/docs">*/}
+            {/*  <NavItem active={false}>Docs</NavItem>*/}
+            {/*</Link>*/}
           </Flex>
         </Flex>
       </Box>
 
       <Flex css={{ gap: '$3' }} justify="end" align="center">
-        <ThemeSwitcher />
+        {/*<ThemeSwitcher />*/}
         <CartButton />
         {isConnected ? (
           <ProfileDropdown />
