@@ -28,8 +28,8 @@ class MyDocument extends Document {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         {/* Meta tags */}
-        <meta name="keywords" content="nft, ethereum, polygon, marketplace, openSea, 0xygen" />
-        <meta name="keywords" content="Nft, Ethereum, Polygon, Marketplace, OpenSea, 0xygen" />
+        <meta name="keywords" content="nft, ethereum, polygon, marketplace, openSea, prismat" />
+        <meta name="keywords" content="Nft, Ethereum, Polygon, Marketplace, OpenSea, prismat" />
 
         {/* Favicon */}
         <link
@@ -39,18 +39,18 @@ class MyDocument extends Document {
         />
 
         {/* Reservoir meta tags */}
-        <meta property="oxygen:title" content="0xygen Market" />
-        <meta property="oxygen:icon" content="/favicon.png" />
+        <meta property="prismat:title" content="Prismat Market" />
+        <meta property="prismat:icon" content="/favicon.png" />
         <meta
-          property="oxygen:token-url-mainnet"
+          property="prismat:token-url-mainnet"
           content="/collection/ethereum/${contract}/${tokenId}"
         />
         <meta
-          property="oxygen:token-url-goerli"
+          property="prismat:token-url-goerli"
           content="/collection/goerli/${contract}/${tokenId}"
         />
         <meta
-          property="oxygen:token-url-polygon"
+          property="prismat:token-url-polygon"
           content="/collection/polygon/${contract}/${tokenId}"
         />
         <body>

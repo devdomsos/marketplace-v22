@@ -82,10 +82,10 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
             css={{ mx: 'auto', maxWidth: 728, pt: '$5', textAlign: 'center' }}
           >
             <Text style="h3" css={{ mb: 24 }}>
-              0xygen Marketplace
+              Prismat Marketplace
             </Text>
             <Text style="body1" css={{ mb: 48 }}>
-              Buy and sell NFTs on 0xygen as well as list them on other marketplaces like OpenSea or Rarible.
+              Buy and sell NFTs on Prismat as well as list them on other marketplaces like OpenSea or Rarible.
             </Text>
             {/*<a*/}
             {/*  href="https://github.com/reservoirprotocol/marketplace-v2"*/}
