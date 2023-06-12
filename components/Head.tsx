@@ -14,9 +14,9 @@ type Props = {
  * @param description - The description of the page.
  */
 export const Head: FC<Props> = ({
-  ogImage = 'https://marketplace.reservoir.tools/og-image.png',
+  ogImage = 'https://ik.imagekit.io/pnluhdfw6/prismatOG.png',
   title = 'Prismat | NFT Marketplace',
-  description = 'Sell NFTs On Prismat and list them on OpenSea and Rarible with few click.',
+  description = 'Sell NFTs On Prismat or list them on OpenSea with few click.',
 }) => {
   return (
     <NextHead>

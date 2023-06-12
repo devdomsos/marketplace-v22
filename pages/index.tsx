@@ -89,7 +89,7 @@ const IndexPage: NextPage<Props> = ({ ssr }) => {
               Prismat Marketplace
             </Text>
             <Text style="body1" css={{ mb: 48 }}>
-              Buy and sell NFTs on Prismat as well as list them on other marketplaces like OpenSea or Rarible.
+              Buy and sell NFTs on Prismat or list them on other marketplaces.
             </Text>
             {/*<a*/}
             {/*  href="https://github.com/reservoirprotocol/marketplace-v2"*/}
