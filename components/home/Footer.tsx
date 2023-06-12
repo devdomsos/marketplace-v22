@@ -100,7 +100,7 @@ export const Footer = () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://twitter.com/Prismat.io"
+            href="https://twitter.com/Prismat_io"
           >
             <Button size="xs" color="gray3">
               <FontAwesomeIcon icon={faTwitter} width={14} height={14} />
