@@ -2,6 +2,7 @@ import AnalyticsProvider, {
   initializeAnalytics,
 } from 'components/AnalyticsProvider'
 initializeAnalytics()
+import ErrorTrackingProvider from 'components/ErrorTrackingProvider'
 
 import { Inter } from '@next/font/google'
 import type { AppContext, AppProps } from 'next/app'
@@ -15,7 +16,7 @@ import {
   darkTheme as rainbowDarkTheme,
   lightTheme as rainbowLightTheme,
 } from '@rainbow-me/rainbowkit'
-import { WagmiConfig, createClient, configureChains } from 'wagmi'
+import { WagmiConfig, createConfig, configureChains } from 'wagmi'
 import * as Tooltip from '@radix-ui/react-tooltip'
 import { publicProvider } from 'wagmi/providers/public'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
@@ -27,12 +28,15 @@ import {
   ReservoirKitTheme,
   CartProvider,
 } from '@reservoir0x/reservoir-kit-ui'
-import { FC, useEffect, useState } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import { HotkeysProvider } from 'react-hotkeys-hook'
 import ToastContextProvider from 'context/ToastContextProvider'
 import supportedChains from 'utils/chains'
 import { useMarketplaceChain } from 'hooks'
 import ChainContextProvider from 'context/ChainContextProvider'
+import ReferralContextProvider, {
+  ReferralContext,
+} from 'context/ReferralContextProvider'
 
 import localFont from '@next/font/local';
 
@@ -62,20 +66,24 @@ export const NORMALIZE_ROYALTIES = process.env.NEXT_PUBLIC_NORMALIZE_ROYALTIES
   ? process.env.NEXT_PUBLIC_NORMALIZE_ROYALTIES === 'true'
   : false
 
-const { chains, provider } = configureChains(supportedChains, [
+const WALLET_CONNECT_PROJECT_ID =
+  process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || ''
+
+const { chains, publicClient } = configureChains(supportedChains, [
   alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID || '' }),
   publicProvider(),
 ])
 
 const { connectors } = getDefaultWallets({
   appName: 'Prismat Marketplace',
+  projectId: WALLET_CONNECT_PROJECT_ID,
   chains,
 })
 
-const wagmiClient = createClient({
+const wagmiClient = createConfig({
   autoConnect: true,
   connectors,
-  provider,
+  publicClient,
 })
 
 //CONFIGURABLE: Here you can override any of the theme tokens provided by RK: https://docs.reservoir.tools/docs/reservoir-kit-theming-and-customization
@@ -96,10 +104,14 @@ function AppWrapper(props: AppProps & { baseUrl: string }) {
         light: 'light',
       }}
     >
-      <WagmiConfig client={wagmiClient}>
+      <WagmiConfig config={wagmiClient}>
         <ChainContextProvider>
           <AnalyticsProvider>
-            <MyApp {...props} />
+            <ErrorTrackingProvider>
+              <ReferralContextProvider>
+                <MyApp {...props} />
+              </ReferralContextProvider>
+            </ErrorTrackingProvider>
           </AnalyticsProvider>
         </ChainContextProvider>
       </WagmiConfig>
@@ -143,6 +155,7 @@ function MyApp({
       )
     }
   }, [theme])
+  const { feesOnTop } = useContext(ReferralContext)
 
   const FunctionalComponent = Component as FC
 
@@ -173,18 +186,23 @@ function MyApp({
               return {
                 id,
                 baseApiUrl: `${baseUrl}${proxyApi}`,
-                default: marketplaceChain.id === id,
+                active: marketplaceChain.id === id,
               }
             }),
+            logLevel: 4,
             source: source,
             normalizeRoyalties: NORMALIZE_ROYALTIES,
+            //CONFIGURABLE: Set your marketplace fee and recipient, (fee is in BPS)
+            // Note that this impacts orders created on your marketplace (offers/listings)
+            // marketplaceFee: 250,
+            // marketplaceFeeRecipient: "0xabc"
             marketplaceFee: FEE_BPS ? parseInt(FEE_BPS) : undefined,
             marketplaceFeeRecipient: FEE_RECIPIENT,
             disablePoweredByReservoir: DISABLE_POWERED_BY_RESERVOIR,
           }}
           theme={reservoirKitTheme}
         >
-          <CartProvider>
+          <CartProvider feesOnTopUsd={feesOnTop}>
             <Tooltip.Provider>
               <RainbowKitProvider
                 chains={chains}

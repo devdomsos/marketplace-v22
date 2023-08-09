@@ -43,16 +43,28 @@ class MyDocument extends Document {
         <meta property="oxygen:icon" content="/favicon.png" />
         <meta
           property="oxygen:token-url-mainnet"
-          content="/collection/ethereum/${contract}/${tokenId}"
+          content="/ethereum/asset/${contract}:${tokenId}"
         />
         <meta
           property="oxygen:token-url-goerli"
-          content="/collection/goerli/${contract}/${tokenId}"
+          content="/goerli/asset/${contract}:${tokenId}"
         />
-        <meta
-          property="oxygen:token-url-polygon"
-          content="/collection/polygon/${contract}/${tokenId}"
-        />
+          <meta
+              property="oxygen:token-url-polygon"
+              content="/polygon/asset/${contract}:${tokenId}"
+          />
+          <meta
+              property="oxygen:token-url-arbitrum"
+              content="/arbitrum/asset/${contract}:${tokenId}"
+          />
+          <meta
+              property="oxygen:token-url-optimism"
+              content="/optimism/asset/${contract}:${tokenId}"
+          />
+          <meta
+              property="oxygen:token-url-zora"
+              content="/zora/asset/${contract}:${tokenId}"
+          />
         <body>
           <Main />
           <NextScript />

@@ -13,6 +13,7 @@ import {
   blackA,
   violet,
   violetA,
+  indigo,
 } from '@radix-ui/colors'
 import { createStitches } from '@stitches/react'
 import type * as Stitches from '@stitches/react'
@@ -46,6 +47,7 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
         ...whiteA,
         ...blackA,
         ...green,
+        ...indigo,
 
         //Aliases
 
@@ -111,6 +113,7 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
         panelBg: '$gray2',
         panelBorder: 'transparent',
         dropdownBg: 'white',
+        sidebarOverlay: 'black',
       },
       space: {
         1: '4px',
@@ -226,6 +229,7 @@ export const { createTheme, keyframes, styled, globalCss, getCssText } =
       bp1200: '(min-width: 1200px)',
       bp1300: '(min-width: 1300px)',
       bp1400: '(min-width: 1400px)',
+      bp1500: '(min-width: 1500px)',
       motion: '(prefers-reduced-motion)',
       hover: '(any-hover: hover)',
       dark: '(prefers-color-scheme: dark)',
@@ -299,5 +303,6 @@ export const darkTheme = createTheme({
     panelBorder: '$slate7',
     panelShadow: 'transparent',
     dropdownBg: '$gray3',
+    sidebarOverlay: 'black',
   },
 })
