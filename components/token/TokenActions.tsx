@@ -1,6 +1,6 @@
 import { faGasPump } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useBids, useTokens } from '@reservoir0x/reservoir-kit-ui'
+import { useBids, useListings, useTokens } from '@reservoir0x/reservoir-kit-ui'
 import { AcceptBid, Bid, BuyNow, List } from 'components/buttons'
 import AddToCart from 'components/buttons/AddToCart'
 import CancelBid from 'components/buttons/CancelBid'
@@ -14,26 +14,26 @@ import { useAccount } from 'wagmi'
 type Props = {
   token: ReturnType<typeof useTokens>['data'][0]
   offer?: ReturnType<typeof useBids>['data'][0]
+  listing?: ReturnType<typeof useListings>['data'][0]
   isOwner: boolean
   mutate?: MutatorCallback
   account: ReturnType<typeof useAccount>
 }
 
-const zoneAddresses = [
-  '0xaa0e012d35cf7d6ecb6c2bf861e71248501d3226', // Ethereum - 0xaa...26
-  '0x49b91d1d7b9896d28d370b75b92c2c78c1ac984a', // Goerli Address - 0x49...4a
-]
-
 export const TokenActions: FC<Props> = ({
   token,
   offer,
+  listing,
   isOwner,
   mutate,
   account,
 }) => {
   const router = useRouter()
   const bidOpenState = useState(true)
-
+  const buyOpenState = useState(true)
+  const [path, _] = router.asPath.split('?')
+  const routerPath = path.split('/')
+  const isBuyRoute = routerPath[routerPath.length - 1] === 'buy'
   const queryBidId = router.query.bidId as string
   const deeplinkToAcceptBid = router.query.acceptBid === 'true'
   const is1155 = token?.token?.kind === 'erc1155'
@@ -53,11 +53,9 @@ export const TokenActions: FC<Props> = ({
       account?.address?.toLowerCase()
   const isListed = token ? token?.market?.floorAsk?.id !== null : false
 
-  const orderZone = offer?.rawData?.zone
-  const orderKind = offer?.kind
+  const offerIsOracleOrder = offer?.isNativeOffChainCancellable
 
-  const isOracleOrder =
-    orderKind === 'seaport-v1.4' && zoneAddresses.includes(orderZone as string)
+  const listingIsOracleOrder = listing?.isNativeOffChainCancellable
 
   const buttonCss: ComponentPropsWithoutRef<typeof Button>['css'] = {
     width: '100%',
@@ -94,30 +92,35 @@ export const TokenActions: FC<Props> = ({
           }
         />
       )}
-      {(!isOwner || is1155) && isListed && (
-        <Flex
-          css={{ ...buttonCss, borderRadius: 8, overflow: 'hidden', gap: 1 }}
-        >
-          <BuyNow
-            token={token}
-            buttonCss={{ flex: 1, justifyContent: 'center' }}
-            buttonProps={{ corners: 'square' }}
-            mutate={mutate}
-          />
-          <AddToCart
-            token={token}
-            buttonCss={{
-              width: 52,
-              p: 0,
-              justifyContent: 'center',
-            }}
-            buttonProps={{ corners: 'square' }}
-          />
-        </Flex>
-      )}
+      {(!isOwner || is1155) &&
+        isListed &&
+        token?.market?.floorAsk?.price?.amount && (
+          <Flex
+            css={{ ...buttonCss, borderRadius: 8, overflow: 'hidden', gap: 1 }}
+          >
+            <BuyNow
+              tokenId={token.token?.tokenId}
+              collectionId={token.token?.collection?.id}
+              buttonCss={{ flex: 1, justifyContent: 'center' }}
+              buttonProps={{ corners: 'square' }}
+              buttonChildren="Buy Now"
+              mutate={mutate}
+              openState={!isOwner && isBuyRoute ? buyOpenState : undefined}
+            />
+            <AddToCart
+              token={token}
+              buttonCss={{
+                width: 52,
+                p: 0,
+                justifyContent: 'center',
+              }}
+              buttonProps={{ corners: 'square' }}
+            />
+          </Flex>
+        )}
       {showAcceptOffer && (
         <AcceptBid
-          token={token}
+          tokenId={token.token?.tokenId}
           bidId={queryBidId}
           collectionId={token?.token?.contract}
           openState={
@@ -146,10 +149,10 @@ export const TokenActions: FC<Props> = ({
           mutate={mutate}
           trigger={
             <Flex>
-              {!isOracleOrder ? (
+              {!offerIsOracleOrder ? (
                 <Tooltip
                   content={
-                    <Text style="body2" as="p">
+                    <Text style="body3" as="p">
                       Cancelling this order requires gas.
                     </Text>
                   }
@@ -204,10 +207,10 @@ export const TokenActions: FC<Props> = ({
           mutate={mutate}
           trigger={
             <Flex>
-              {!isOracleOrder ? (
+              {!listingIsOracleOrder ? (
                 <Tooltip
                   content={
-                    <Text style="body2" as="p">
+                    <Text style="body3" as="p">
                       Cancelling this order requires gas.
                     </Text>
                   }

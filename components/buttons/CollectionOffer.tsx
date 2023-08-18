@@ -1,8 +1,22 @@
 import { BidModal, BidStep, Trait } from '@reservoir0x/reservoir-kit-ui'
 import { Button } from 'components/primitives'
 import { useRouter } from 'next/router'
-import { ComponentProps, FC, useContext, useEffect, useState } from 'react'
-import { useAccount, useNetwork, useSigner, useSwitchNetwork } from 'wagmi'
+import {
+  ComponentProps,
+  ComponentPropsWithoutRef,
+  FC,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
+import {
+  mainnet,
+  useAccount,
+  useNetwork,
+  useWalletClient,
+  useSwitchNetwork,
+} from 'wagmi'
 import { useCollections } from '@reservoir0x/reservoir-kit-ui'
 import { SWRResponse } from 'swr'
 import { CSS } from '@stitches/react'
@@ -14,19 +28,23 @@ type Props = {
   collection: NonNullable<ReturnType<typeof useCollections>['data']>[0]
   mutate?: SWRResponse['mutate']
   buttonCss?: CSS
+  buttonChildren?: ReactNode
   buttonProps?: ComponentProps<typeof Button>
 }
+
+type BiddingCurrencies = ComponentPropsWithoutRef<typeof BidModal>['currencies']
 
 const CollectionOffer: FC<Props> = ({
   collection,
   mutate,
   buttonCss,
+  buttonChildren,
   buttonProps = {},
 }) => {
   const router = useRouter()
   const marketplaceChain = useMarketplaceChain()
   const [attribute, setAttribute] = useState<Trait>(undefined)
-  const { data: signer } = useSigner()
+  const { data: signer } = useWalletClient()
   const { chain: activeChain } = useNetwork()
   const { isDisconnected } = useAccount()
   const { openConnectModal } = useConnectModal()
@@ -68,6 +86,34 @@ const CollectionOffer: FC<Props> = ({
   )
   const isAttributeModal = !!attribute
 
+  // CONFIGURABLE: Here you can configure which currencies you would like to support for bidding
+  let bidCurrencies: BiddingCurrencies = undefined
+  if (marketplaceChain.id === mainnet.id) {
+    bidCurrencies = [
+      {
+        contract: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+        symbol: 'WETH',
+        coinGeckoId: 'ethereum',
+      },
+      {
+        contract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+        symbol: 'USDC',
+        decimals: 6,
+        coinGeckoId: 'usd-coin',
+      },
+    ]
+  }
+
+  const trigger = (
+    <Button css={buttonCss} color="primary" {...buttonProps}>
+      {buttonChildren
+        ? buttonChildren
+        : isAttributeModal
+        ? 'Attribute Offer'
+        : 'Collection Offer'}
+    </Button>
+  )
+
   if (isDisconnected || isInTheWrongNetwork) {
     return (
       <Button
@@ -87,7 +133,11 @@ const CollectionOffer: FC<Props> = ({
         }}
         {...buttonProps}
       >
-        {isAttributeModal ? 'Attribute Offer' : 'Collection Offer'}
+        {buttonChildren
+          ? buttonChildren
+          : isAttributeModal
+          ? 'Attribute Offer'
+          : 'Collection Offer'}
       </Button>
     )
   } else
@@ -96,12 +146,9 @@ const CollectionOffer: FC<Props> = ({
         {isSupported && (
           <BidModal
             collectionId={collection?.id}
-            trigger={
-              <Button css={buttonCss} {...buttonProps}>
-                {isAttributeModal ? 'Attribute Offer' : 'Collection Offer'}
-              </Button>
-            }
+            trigger={trigger}
             attribute={attribute}
+            currencies={bidCurrencies}
             onClose={(data, stepData, currentStep) => {
               if (mutate && currentStep == BidStep.Complete) mutate()
             }}

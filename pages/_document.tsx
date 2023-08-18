@@ -43,16 +43,28 @@ class MyDocument extends Document {
         <meta property="prismat:icon" content="/favicon.png" />
         <meta
           property="prismat:token-url-mainnet"
-          content="/collection/ethereum/${contract}/${tokenId}"
+          content="/ethereum/asset/${contract}:${tokenId}"
         />
         <meta
           property="prismat:token-url-goerli"
-          content="/collection/goerli/${contract}/${tokenId}"
+          content="/goerli/asset/${contract}:${tokenId}"
         />
-        <meta
-          property="prismat:token-url-polygon"
-          content="/collection/polygon/${contract}/${tokenId}"
-        />
+          <meta
+              property="prismat:token-url-polygon"
+              content="/polygon/asset/${contract}:${tokenId}"
+          />
+          <meta
+              property="prismat:token-url-arbitrum"
+              content="/arbitrum/asset/${contract}:${tokenId}"
+          />
+          <meta
+              property="prismat:token-url-optimism"
+              content="/optimism/asset/${contract}:${tokenId}"
+          />
+          <meta
+              property="prismat:token-url-zora"
+              content="/zora/asset/${contract}:${tokenId}"
+          />
         <body>
           <Main />
           <NextScript />

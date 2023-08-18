@@ -22,7 +22,7 @@ export default ({ attribute, collectionTokenCount, collectionId }: Props) => {
     (attributeTokenCount / totalTokens) * 100,
     1
   )
-  const attributeHref = `/collection/${routePrefix}/${collectionId}?attributes[${attribute.key}]=${attribute.value}`
+  const attributeHref = `/${routePrefix}/collection/${collectionId}?attributes[${attribute.key}]=${attribute.value}`
   return (
     <Link href={attributeHref} style={{ minWidth: 0 }}>
       <Flex
@@ -53,10 +53,10 @@ export default ({ attribute, collectionTokenCount, collectionId }: Props) => {
           />
         </Flex>
         <Flex justify="between">
-          <Text style="body2" css={{ color: '$gray11' }}>
+          <Text style="body3" css={{ color: '$gray11' }}>
             {formatNumber(attribute.tokenCount)} ({attributeRarity}%) have this
           </Text>
-          <Text style="body2" css={{ color: '$gray11' }}>
+          <Text style="body3" css={{ color: '$gray11' }}>
             floor
           </Text>
         </Flex>
